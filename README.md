@@ -30,7 +30,7 @@ maven { url 'https://jitpack.io' }
 > build添加
 >
 > ```java
->  implementation 'com.github.AnglePengCoding:AngleGradientTextView:1.0.2'
+>  implementation 'com.github.AnglePengCoding:AngleGradientTextView:1.0.3'
 > ```
 
 
