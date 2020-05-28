@@ -13,8 +13,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         AngleGradientTextView mAgt =findViewById(R.id.mAgt);
-        mAgt.setDelayMilliseconds(500);
-        mAgt.setScanPositions(new float[]{0f,0.5f,1f});
+        mAgt.setScanPositions(new float[]{0f,1f,0f});
+        mAgt.setScanColors(new int[]{0x43fff44f, 0xffff33ff, 0x65f2fff});
+        mAgt.setDelayMilliseconds(2);
     }
 }
 

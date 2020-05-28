@@ -24,8 +24,8 @@ public class AngleGradientTextView extends AppCompatTextView {
     private int mTranslate = 0;
     private long mDelayMilliseconds;
     private int delta = 15;
-    private int colors[];
-    private float positions[];
+    private int colors[]= new int[]{ 0x33ffffff, 0xffffffff, 0x33fffff};
+    private float positions[] = new float[]{ 0, 0.5f, 1};
 
     public AngleGradientTextView(Context context) {
         super(context);
@@ -50,7 +50,7 @@ public class AngleGradientTextView extends AppCompatTextView {
                     size = mViewWidth;
                 }
                 mLinearGradient = new LinearGradient(-size, 0, 0, 0,
-                        getColors(), getPositions(), Shader.TileMode.CLAMP);
+                        colors, positions, Shader.TileMode.CLAMP);
                 mPaint.setShader(mLinearGradient);
                 mGradientMatrix = new Matrix();
             }
@@ -89,16 +89,6 @@ public class AngleGradientTextView extends AppCompatTextView {
     }
 
 
-    public int[] getColors() {
-        if (colors == null) {
-            colors = new int[]{
-                    0x33ffffff, 0xffffffff, 0x33fffff
-            };
-            return colors;
-        }
-        return colors;
-    }
-
     /**
      * 扫描颜色
      * 数组长度为3
@@ -106,20 +96,10 @@ public class AngleGradientTextView extends AppCompatTextView {
      * @param colors 颜色
      */
     public void setScanColors(int[] colors) {
-        if (colors.length < 2) {
+        if (colors.length > 4) {
             throw new IndexOutOfBoundsException("colors the maximum size is three");
         }
         this.colors = colors;
-    }
-
-    public float[] getPositions() {
-        if (positions == null) {
-            positions = new float[]{
-                    0, 0.5f, 1
-            };
-            return positions;
-        }
-        return positions;
     }
 
     /**
@@ -129,7 +109,7 @@ public class AngleGradientTextView extends AppCompatTextView {
      * @param positions 扫描渐变设置
      */
     public void setScanPositions(float[] positions) {
-        if (positions.length < 2) {
+        if (positions.length > 4) {
             throw new IndexOutOfBoundsException("positions the maximum size is three");
         }
         this.positions = positions;
