@@ -22,8 +22,10 @@ public class AngleGradientTextView extends AppCompatTextView {
     private Paint mPaint;
     private int mViewWidth = 0;
     private int mTranslate = 0;
-
+    private long mDelayMilliseconds;
     private int delta = 15;
+    private int colors[];
+    private float positions[];
 
     public AngleGradientTextView(Context context) {
         super(context);
@@ -48,8 +50,7 @@ public class AngleGradientTextView extends AppCompatTextView {
                     size = mViewWidth;
                 }
                 mLinearGradient = new LinearGradient(-size, 0, 0, 0,
-                        new int[]{0x33ffffff, 0xffffffff, 0x33ffffff},
-                        new float[]{0, 0.2f, 1}, Shader.TileMode.CLAMP); //边缘融合
+                        getColors(), getPositions(), Shader.TileMode.CLAMP);
                 mPaint.setShader(mLinearGradient);
                 mGradientMatrix = new Matrix();
             }
@@ -66,6 +67,71 @@ public class AngleGradientTextView extends AppCompatTextView {
         }
         mGradientMatrix.setTranslate(mTranslate, 0);
         mLinearGradient.setLocalMatrix(mGradientMatrix);
-        postInvalidateDelayed(500);
+        postInvalidateDelayed(getDelayMilliseconds());
+    }
+
+
+    /**
+     * 扫描时间
+     *
+     * @param delayMilliseconds 扫描时间
+     */
+    public void setDelayMilliseconds(long delayMilliseconds) {
+        this.mDelayMilliseconds = delayMilliseconds;
+    }
+
+    public long getDelayMilliseconds() {
+        if (mDelayMilliseconds == 0) {
+            mDelayMilliseconds = 30;
+            return mDelayMilliseconds;
+        }
+        return mDelayMilliseconds;
+    }
+
+
+    public int[] getColors() {
+        if (colors == null) {
+            colors = new int[]{
+                    0x33ffffff, 0xffffffff, 0x33fffff
+            };
+            return colors;
+        }
+        return colors;
+    }
+
+    /**
+     * 扫描颜色
+     * 数组长度为3
+     *
+     * @param colors 颜色
+     */
+    public void setScanColors(int[] colors) {
+        if (colors.length < 2) {
+            throw new IndexOutOfBoundsException("colors the maximum size is three");
+        }
+        this.colors = colors;
+    }
+
+    public float[] getPositions() {
+        if (positions == null) {
+            positions = new float[]{
+                    0, 0.5f, 1
+            };
+            return positions;
+        }
+        return positions;
+    }
+
+    /**
+     * 扫描渐变设置
+     * 数组长度为3
+     *
+     * @param positions 扫描渐变设置
+     */
+    public void setScanPositions(float[] positions) {
+        if (positions.length < 2) {
+            throw new IndexOutOfBoundsException("positions the maximum size is three");
+        }
+        this.positions = positions;
     }
 }
